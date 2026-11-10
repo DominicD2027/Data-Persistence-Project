@@ -5,11 +5,24 @@ using UnityEngine;
 
 public class DeathZone : MonoBehaviour
 {
-    public MainManager Manager;
+    // Changed this from MainManager to LevelManager
+    public LevelManager Manager;
 
     private void OnCollisionEnter(Collision other)
     {
         Destroy(other.gameObject);
-        Manager.GameOver();
+
+        if (Manager != null)
+        {
+            Manager.GameOver();
+        }
+        else
+        {
+            LevelManager foundManager = FindObjectOfType<LevelManager>();
+            if (foundManager != null)
+            {
+                foundManager.GameOver();
+            }
+        }
     }
 }
